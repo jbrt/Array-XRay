@@ -1,10 +1,10 @@
 # Array-XRay
 
-A tool to provide an inventory of your EMC VPLEX and IBM SVC arrays
+A tool to provide an inventory of your EMC VPLEX, VMAX and IBM SVC arrays
 
 ## Purpose
 
-This tool can manage EMC VPLEX and IBM SVC/FlashSystem arrays.
+This tool can manage EMC VPLEX, VMAX and IBM SVC/FlashSystem arrays.
 
 On EMC VPLEX systems you can inventory:
 - All Cluster's information
@@ -12,6 +12,19 @@ On EMC VPLEX systems you can inventory:
 - List of all volumes 
 - List of all Storage Views
 - List of all backend Storage arrays
+
+On EMC VMAX systems you can inventory:
+- All System's information
+- List of Thin Pools (for VMAX-2 family)
+- List of TDEVs
+- List of SRPs (for VMAX-3 family)
+- List of Initiators
+- List of Masking Views
+- List of Hosts
+- List of Host Groups
+- List of Port Groups
+- List of Storage Groups
+- List of FAST Policies (for VMAX-2 family)
 
 On IBM SVC systems you can inventory: 
 - List of all SVC systems
@@ -52,8 +65,6 @@ optional arguments:
 
 ### Example
 
-
-
 ```
 [jbrt@locahost]$ ./vplex-xray.py --config conf.txt --path . --file VPLEX.xlsx
 Initializing a Excel workbook (VPLEX.xlsx)
@@ -80,6 +91,61 @@ Here is the syntax of the configuration file needed by this tool :
 ``` 
 
 You can add all the VPLEXs you need.
+
+## EMC VMAX
+
+For collecting data on VMAXs this tool use the REST API of UNIPSHERE for VMAX. 
+**You must use version 8.x at least.**
+
+### Usage
+
+```
+[jbrt@localhost]$ ./vmax-xray.py --help
+usage: vmax-xray.py [-h] -c CONFIG -p PATH -f FILE [-d]
+
+VMAX-XRay - Tool for Inventory a VMAX array
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -c CONFIG, --config CONFIG
+                        config file
+  -p PATH, --path PATH  path to store file
+  -f FILE, --file FILE  name of the file
+  -d, --debug           enable debug mode
+```
+
+### Example
+
+```
+[jbrt@locahost]$ ./vmax-xray.py --config conf.txt --path . --file VMAX.xlsx
+Initializing a Excel workbook (VMAX.xlsx)
+
+Beginning of data extraction 000298700609
+- Extraction of System's information
+- Extraction of Thin Pools
+- Extraction of TDEVs
+- Extraction of Initiators
+- Extraction of Masking Views
+- Extraction of Hosts
+- Extraction of Host Groups
+- Extraction of Port Groups
+- Extraction of Storage Groups
+- Extraction of FAST Policies
+End of data extraction 000298700609
+```
+
+### Configuration file
+
+Here is the syntax of the configuration file needed by this tool :
+
+```
+[YOUR_SYMMETRIX_ID]
+    address = IP_ADDRESS_OF_UNISPHERE
+    user = username
+    password = password
+``` 
+
+You can add all the VMAXs you need.
 
 ## IBM SVC / FlashSystem
 
@@ -145,7 +211,7 @@ You can add all the SVCs you need.
 There is a lot of work ahead ! This is a first release of that tool. Many
 new features will come depending on the needs. Here is some of ideas :
 
-- Adding support of the VMAX arrays (merge from my project Vmax-XRay)
+- ~~Adding support of the VMAX arrays (merge from my project Vmax-XRay)~~ done
 - Adding new inventory format (load data into ElasticSearch, for example)
 
 Feel free to contribute if you want.

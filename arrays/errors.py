@@ -17,7 +17,7 @@ class VmaxInventoryFactoryError(Exception):
         Exception.__init__(self, message)
 
 
-class VmaxIteratorError(Exception):
+class VMAXConnectionError(Exception):
     def __init__(self, message):
         Exception.__init__(self, message)
 
