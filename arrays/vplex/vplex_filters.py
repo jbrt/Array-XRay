@@ -10,6 +10,23 @@ between arrays.
 from collections import OrderedDict
 
 
+def gigabytes(value: str):
+    """
+    Convert a VPLEX size string to consistent gigabytes values
+    :param value: (str) VPLEX string size (ex: 2T, 128G, etc.)
+    :return: (float) size in gigabytes
+    """
+    convert = {'P': lambda e: float(e) * 1048576,
+               'T': lambda e: float(e) * 1024,
+               'G': lambda e: float(e),
+               'M': lambda e: float(e) / 1024}
+    try:
+        return convert[value[-1]](value[:-1])
+    except KeyError:
+        # If no matching pattern, just return the input value
+        return value
+
+
 class VPLEXFilter(object):
     """ Abstract class for all filters objects """
 
@@ -105,7 +122,7 @@ class VPLEXView(VPLEXFilter):
                 clean['LUN-ID'] = members[0]
                 clean['Volume'] = members[1]
                 clean['NAA'] = members[2]
-                clean['Size'] = members[3]
+                clean['Size'] = gigabytes(members[3])
                 lst = ['operational-status', 'initiators',
                        'ports', 'xcopy-enabled']
 
