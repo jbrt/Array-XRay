@@ -38,7 +38,7 @@ class XlsInjector(Injector):
             file = os.path.join(directory, filename)
             if os.path.isfile(file):
                 open(file, 'rb+')
-        except PermissionError:
+        except (PermissionError, OSError):
             msg = '%s already open. Add a time to the filename' % filename
             self._logger.warning(msg)
             timestamp = datetime.now().strftime('_%Y-%m-%d_%Hh%Mm%Ss.')
