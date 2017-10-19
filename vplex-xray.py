@@ -47,6 +47,7 @@ def main(arguments):
             logger.error('Problem : %s' % error)
             logger.warning('Skip this one and go ahead')
             continue
+    del formatter
 
 
 if __name__ == '__main__':

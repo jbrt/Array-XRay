@@ -48,6 +48,7 @@ def main(arguments):
             logger.error('Error: %s' % error)
             logger.warning('Skip %s and go ahead' % array)
             continue
+    del formatter
 
 
 if __name__ == '__main__':
