@@ -45,6 +45,8 @@ class VPLEXCommunicator(object):
                     raise VPLEXConnectionError('Authentication failure')
         except requests.exceptions.ConnectionError:
             raise VPLEXConnectionError('Problem while connecting to VPLEX')
+        except requests.exceptions.ReadTimeout:
+            raise VPLEXConnectionError('Connection timeout occurs')
         else:
             return data['response']['context']
 
